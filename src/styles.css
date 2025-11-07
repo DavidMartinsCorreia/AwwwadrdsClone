@@ -1,2 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Declarar fontes personalizadas */
+@font-face {
+  font-family: 'Zentry';
+  src: url('/fonts/zentry-regular.woff2') format('woff2'),
+    url('/fonts/zentry-regular.woff') format('woff'),
+    url('/fonts/zentry-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans-regular.woff2') format('woff2'),
+    url('/fonts/general-sans-regular.woff') format('woff'),
+    url('/fonts/general-sans-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Adiciona variantes bold se tiveres */
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/general-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Classes personalizadas */
+@layer utilities {
+  .special-font {
+    font-family: 'Zentry', sans-serif;
+  }
+
+  .font-general {
+    font-family: 'General Sans', sans-serif;
+  }
+
+  .hero-heading {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+
+  .absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

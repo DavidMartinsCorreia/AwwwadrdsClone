@@ -1,0 +1,53 @@
+<div class="relative h-dvh w-screen overflow-x-hidden">
+
+  <div id="video-frame"
+    class="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75 flex items-center justify-center">
+
+    <div class="mask-clip-path z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+      <div (click)="handleMiniVdClick()"
+        class="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
+        <video #miniVideoRef [src]="getVideoSrc(getNextVideoIndex())" loop muted playsinline
+          class="size-64 origin-center scale-150 object-cover object-center" (loadeddata)="handleVideoLoaded()">
+        </video>
+      </div>
+    </div>
+
+    <video #nextVideoRef [src]="getVideoSrc(getNextVideoIndex())" loop muted id="next-video"
+      class="absolute-center invisible absolute z-20 size-64 object-cover object-center"
+      (loadeddata)="handleVideoLoaded()">
+    </video>
+
+    <video #currentVideoRef [src]="getVideoSrc(currentIndex)" loop muted playsinline preload="auto"
+      class="absolute left-0 top-0 size-full object-cover" (loadeddata)="handleVideoLoaded()"
+      (canplay)="onVideoCanPlay()">
+    </video>
+
+  </div>
+
+  <h1 class="special-font hero-heading absolute bottom-5 right-5 z-40 text-white">
+    G<b>a</b>ming
+  </h1>
+
+
+  <div class="absolute left-0 top-0 z-40 size-full">
+    <div class="mt-24 px-5 sm:px-10">
+      <h1 class="special-font hero-heading text-blue-100">
+        redefi<b>n</b>e
+      </h1>
+      <p class="mb-5 max-w-64 font-robert-regular text-blue-100">
+        Enter the Metagame Layer <br /> Unleash the Play Economy
+      </p>
+
+      <Button id="watch-trailer" title="Watch Trailer"
+        class="flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-white hover:bg-blue-200 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 fill-current">
+          <path
+            d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+        </svg>
+        Watch Trailer
+      </Button>
+
+    </div>
+  </div>
+
+</div>
