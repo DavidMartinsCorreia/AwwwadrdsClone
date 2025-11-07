@@ -3,7 +3,7 @@
   <div id="video-frame"
     class="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75 flex items-center justify-center">
 
-    <div class="mask-clip-path z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+   <div class="mask-clip-path absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
       <div (click)="handleMiniVdClick()"
         class="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
         <video #miniVideoRef [src]="getVideoSrc(getNextVideoIndex())" loop muted playsinline
@@ -29,7 +29,7 @@
   </h1>
 
 
-  <div class="absolute left-0 top-0 z-40 size-full">
+  <div class="absolute left-0 top-0 z-40 size-1/4">
     <div class="mt-24 px-5 sm:px-10">
       <h1 class="special-font hero-heading text-blue-100">
         redefi<b>n</b>e

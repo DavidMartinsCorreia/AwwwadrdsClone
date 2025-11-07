@@ -24,70 +24,80 @@ export class HeroComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('Current index on init:', this.currentIndex);
     setTimeout(() => {
-      this.currentVideoRef?.nativeElement?.play().catch((err) => {
-        console.error('Error playing video:', err);
-      });
+      this.currentVideoRef?.nativeElement?.play();
     }, 100);
   }
 
   onVideoCanPlay() {
-    this.currentVideoRef?.nativeElement?.play().catch((err) => {
-      console.error('Error auto-playing video:', err);
-    });
+    this.currentVideoRef?.nativeElement?.play()
   }
 
-  handleMiniVdClick() {
-    this.hasClicked = true;
-    this.currentIndex = this.getNextVideoIndex();
-    console.log('Clicked! New index:', this.currentIndex);
-
-    this.animateVideoTransition();
-    this.miniVideoRef?.nativeElement?.load();
-  }
+handleMiniVdClick() {
+  this.hasClicked = true;
+  const nextIndex = this.getNextVideoIndex(); 
+  this.animateVideoTransition(nextIndex);
+}
 
   handleVideoLoaded() {
     this.loadedVideos += 1;
-    this.isLoading = false;
-    console.log('Video loaded successfully. Total loaded:', this.loadedVideos);
+    if (this.loadedVideos >= this.totalVideos - 1) {
+      this.isLoading = false;
+    }
+
   }
 
   getVideoSrc(index: number): string {
-    const safeIndex = ((index - 1) % this.totalVideos) + 1;
-    return `/videos/hero-${safeIndex}.mp4`;
+    return `videos/hero-${index}.mp4`;
   }
 
   getNextVideoIndex(): number {
-    return this.currentIndex >= this.totalVideos ? 1 : this.currentIndex + 1;
+    return (this.currentIndex % this.totalVideos) + 1;
   }
 
-  private animateVideoTransition(): void {
-    if (this.hasClicked) {
-      const nextVideo = this.nextVideoRef?.nativeElement;
+  getMiniVideoIndex(): number {
+    return (this.currentIndex % this.totalVideos) + 1;
+  }
 
-      gsap.set('#next-video', { visibility: 'visible' });
+ private animateVideoTransition(nextIndex: number): void {
+  const nextVideo = this.nextVideoRef?.nativeElement;
+  const currentVideo = this.currentVideoRef?.nativeElement;
 
-      gsap.to('#next-video', {
-        transformOrigin: 'center center',
-        scale: 1,
-        width: '100%',
-        height: '100%',
-        duration: 1,
-        ease: 'power1.inOut',
-        onStart: () => {
-          if (nextVideo) {
-            nextVideo.play();
-          }
-        },
-      });
+  nextVideo.src = this.getVideoSrc(nextIndex);
+  nextVideo.load();
 
-      gsap.from('#current-video', {
-        transformOrigin: 'center center',
+  gsap.set(nextVideo, { visibility: 'visible' });
+
+  gsap.to(nextVideo, {
+    transformOrigin: 'center center',
+    scale: 1,
+    width: '100%',
+    height: '100%',
+    duration: 1,
+    ease: 'power1.inOut',
+    
+    onStart: () => {
+      nextVideo.play();
+    },
+    
+    onComplete: () => {
+      this.hasClicked = false;
+
+      this.currentIndex = nextIndex;
+
+      currentVideo.src = this.getVideoSrc(this.currentIndex);
+      currentVideo.load();
+      currentVideo.play().catch(() => {});
+
+      gsap.set(nextVideo, {
+        visibility: 'hidden',
         scale: 0,
-        duration: 1.5,
-        ease: 'power1.inOut',
+        width: '16rem',
+        height: '16rem'
       });
     }
-  }
+  });
+  
 }
+}
+
