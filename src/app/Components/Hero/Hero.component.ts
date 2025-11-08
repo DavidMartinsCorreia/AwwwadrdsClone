@@ -92,7 +92,15 @@ export class HeroComponent implements OnInit, AfterViewInit {
     nextVideo.src = this.getVideoSrc(nextIndex);
     nextVideo.load();
 
-    gsap.set(nextVideo, { visibility: 'visible' });
+    gsap.set(nextVideo, {
+      visibility: 'visible',
+      opacity: 1,
+      scale: 0,
+      width: '16rem',
+      height: '16rem',
+      zIndex: 20,
+    });
+
 
     gsap.to(nextVideo, {
       transformOrigin: 'center center',
@@ -101,21 +109,16 @@ export class HeroComponent implements OnInit, AfterViewInit {
       height: '100%',
       duration: 1,
       ease: 'power1.inOut',
-
       onStart: () => {
         nextVideo.play();
       },
-
       onComplete: () => {
         this.hasClicked = false;
         this.currentIndex = nextIndex;
 
-        currentVideo.src = this.getVideoSrc(this.currentIndex);
-        currentVideo.load();
-        currentVideo.play().catch(() => {});
-
         gsap.set(nextVideo, {
           visibility: 'hidden',
+          opacity: 0,
           scale: 0,
           width: '16rem',
           height: '16rem',
@@ -123,12 +126,16 @@ export class HeroComponent implements OnInit, AfterViewInit {
       },
     });
 
-    // Anima o vídeo atual diminuindo
-    gsap.from(currentVideo, {
-      transformOrigin: 'center center',
-      scale: 0,
-      duration: 1.5,
-      ease: 'power1.inOut',
-    });
+    gsap.fromTo(
+      currentVideo,
+      {
+        scale: 1,
+      },
+      {
+        scale: 1.05,
+        duration: 1.5,
+        ease: 'power1.inOut',
+      }
+    );
   }
 }
