@@ -1,9 +1,9 @@
 <div class="relative h-dvh w-screen overflow-x-hidden">
 
-  <div id="video-frame"
+  <div #videoFrame id="video-frame"
     class="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75 flex items-center justify-center">
 
-   <div class="mask-clip-path absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+    <div class="mask-clip-path absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
       <div (click)="handleMiniVdClick()"
         class="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100">
         <video #miniVideoRef [src]="getVideoSrc(getNextVideoIndex())" loop muted playsinline
@@ -38,6 +38,7 @@
         Enter the Metagame Layer <br /> Unleash the Play Economy
       </p>
 
+      <!-- this part its for make the component button to navigate-->
       <Button id="watch-trailer" title="Watch Trailer"
         class="flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-white hover:bg-blue-200 transition">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 fill-current">
